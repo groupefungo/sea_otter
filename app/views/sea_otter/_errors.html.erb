@@ -1,0 +1,56 @@
+<% content_for(SeaOtter.configuration.content_for_name) do %>
+  <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+<% end %>
+
+<section id="sea-otter-error-page">
+  <div id="sea-otter-header">
+    <h1><%= error.text %></h1>
+  </div>
+
+  <table id="sea-otter-table">
+    <% error.code.each_with_index do |line, index| %>
+      <% index -= SeaOtter::JSContext::Error::ERROR_LINES_RANGE %>
+
+      <tr class="<%= index == 0 ? 'sea-otter-error-line' : '' %>">
+        <td class="sea-otter-td sea-otter-td-number"><%= index + error.error_line %></td>
+        <td class="sea-otter-td"><%= line %></td>
+      </tr>
+    <% end %>
+  </table>
+
+  <ul>
+    <% error.backtrace.each do |line| %>
+      <li><%= line %></li>
+    <% end %>
+  </ul>
+</section>
+
+<style>
+  #sea-otter-error-page {
+    font-family: 'Montserrat', sans-serif;
+  }
+
+  #sea-otter-header {
+    padding: 32px 16px;
+    background: #e24967;
+    color: rgba(0, 0, 0, 0.88);
+  }
+
+  #sea-otter-table {
+    width: 100%;
+    border: 4px solid rgba(0, 0, 0, 0.88);
+    border-collapse: collapse;
+  }
+
+  .sea-otter-error-line {
+    background: #e2f2ed;
+  }
+
+  .sea-otter-td {
+    border: 2px solid rgba(0, 0, 0, 0.88);
+  }
+
+  .sea-otter-td-number {
+    user-select: none;
+  }
+</style>
