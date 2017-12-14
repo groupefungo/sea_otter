@@ -25,7 +25,7 @@ module SeaOtter
         def print_console_logs(logs)
           return if !Rails.env.development? || logs.blank?
 
-          "<script>#{logs.map {|log| "console.log('#{log}')"}.join(';')}</script>".html_safe
+          "<script>#{logs.map {|log| "console.log(\"#{log}\")"}.join(';')}</script>".html_safe
         end
 
         def print_preloaded_state(json_props)
