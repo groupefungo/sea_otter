@@ -1,6 +1,6 @@
 module SeaOtter
   class Configuration
-    attr_accessor :content_for_name, :server_bundle_path
+    attr_accessor :content_for_name, :server_bundle_path, :source_path
   end
 
   class << self

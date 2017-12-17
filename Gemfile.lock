@@ -57,7 +57,7 @@ GEM
     i18n (0.9.1)
       concurrent-ruby (~> 1.0)
     json (2.1.0)
-    libv8 (5.9.211.38.1-x86_64-darwin-16)
+    libv8 (5.9.211.38.1)
     loofah (2.1.1)
       crass (~> 1.0.2)
       nokogiri (>= 1.5.9)
@@ -99,10 +99,6 @@ GEM
       rake (>= 0.8.7)
       thor (>= 0.18.1, < 2.0)
     rake (10.5.0)
-    rspec (3.7.0)
-      rspec-core (~> 3.7.0)
-      rspec-expectations (~> 3.7.0)
-      rspec-mocks (~> 3.7.0)
     rspec-core (3.7.0)
       rspec-support (~> 3.7.0)
     rspec-expectations (3.7.0)
@@ -110,6 +106,14 @@ GEM
       rspec-support (~> 3.7.0)
     rspec-mocks (3.7.0)
       diff-lcs (>= 1.2.0, < 2.0)
+      rspec-support (~> 3.7.0)
+    rspec-rails (3.7.2)
+      actionpack (>= 3.0)
+      activesupport (>= 3.0)
+      railties (>= 3.0)
+      rspec-core (~> 3.7.0)
+      rspec-expectations (~> 3.7.0)
+      rspec-mocks (~> 3.7.0)
       rspec-support (~> 3.7.0)
     rspec-support (3.7.0)
     simplecov (0.15.1)
@@ -124,6 +128,7 @@ GEM
       actionpack (>= 4.0)
       activesupport (>= 4.0)
       sprockets (>= 3.0.0)
+    sqlite3 (1.3.13)
     thor (0.20.0)
     thread_safe (0.3.6)
     tzinfo (1.2.4)
@@ -138,9 +143,10 @@ PLATFORMS
 DEPENDENCIES
   bundler (~> 1.16)
   rake (~> 10.0)
-  rspec (~> 3.0)
+  rspec-rails (~> 3.6)
   sea_otter!
   simplecov
+  sqlite3
 
 BUNDLED WITH
    1.16.0

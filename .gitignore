@@ -1,4 +1,5 @@
 /.idea/
+/coverage/
 .bundle/
 log/*.log
 pkg/
