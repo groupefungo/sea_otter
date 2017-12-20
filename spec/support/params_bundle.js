@@ -4,5 +4,5 @@
     props: __PRELOADED_STATE__,
   };
 
-  //# sourceMappingURL=server.js.map
+  //# sourceMappingURL=params_bundle.js.map
 })();

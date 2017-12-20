@@ -10,7 +10,7 @@ RSpec.describe SeaOtter::Renderer::SourceMap do
       let(:bundle_line) {10434}
 
       context 'with a valid source map' do
-        subject {SeaOtter::Renderer::SourceMap.new(File.read("#{SeaOtter::Engine.root}/spec/support/source_map.js"))}
+        subject {SeaOtter::Renderer::SourceMap.new(File.read("#{SeaOtter::Engine.root}/spec/support/params_bundle.js.map"))}
 
         it('returns the source map infos for a bundle line and column') do
           source_map_infos = subject.original_position_for(bundle_line, bundle_column)
@@ -45,7 +45,7 @@ RSpec.describe SeaOtter::Renderer::SourceMap do
     context '.source_map_url' do
       context 'with a URL' do
         it 'returns the url' do
-          expect(subject.source_map_url(server_bundle_with_source_map)).to eq('server.js.map')
+          expect(subject.source_map_url(server_bundle_with_source_map)).to eq('params_bundle.js.map')
         end
       end
 

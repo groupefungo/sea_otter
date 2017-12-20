@@ -12,6 +12,15 @@ module SeaOtter
       ActiveSupport.on_load(:action_view) {
         include SeaOtter::ApplicationHelper
       }
+
+      ActionController::Renderers.add(:sea_otter) do |obj, options|
+        pp obj
+        pp options
+
+        @alex = 'zicat'
+        
+        render html: '<h1>Alex</h1>'.html_safe
+      end
     end
   end
 end

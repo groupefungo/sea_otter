@@ -25,13 +25,6 @@ module SeaOtter
 
       class << self
 
-        def source_map_url(file_path)
-          server_bundle = File.read(file_path)
-          match = server_bundle.match(/sourceMappingURL=(.*)/)
-
-          match && match[1]
-        end
-
         def js_context
           @js_context ||= begin
             context = MiniRacer::Context.new
@@ -39,6 +32,15 @@ module SeaOtter
 
             context
           end
+        end
+
+        def source_map_url(file_path)
+          file_name = File.basename(file_path)
+          server_bundle = File.read(file_path)
+
+          match = server_bundle.match(/sourceMappingURL=(#{file_name}.map)/)
+
+          match && match[1]
         end
       end
     end
