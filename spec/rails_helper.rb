@@ -8,7 +8,6 @@ SimpleCov.start do
   add_group 'Engine', /(lib\/(sea_otter\/)?[^\/]*\.rb)/
   add_group 'Renderer', /lib\/sea_otter\/renderer/
   add_group 'Helpers', /app\/helpers/
-  add_group 'Errors', /lib\/sea_otter\/errors/
 end
 
 # This file is copied to spec/ when you run 'rails generate rspec:install'

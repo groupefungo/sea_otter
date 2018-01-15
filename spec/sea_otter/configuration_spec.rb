@@ -1,12 +1,12 @@
 require 'rails_helper'
 
 RSpec.describe SeaOtter::Configuration do
-  let(:content_for_name) {:sea_otter}
+  let(:content_for_name) {:new_content_for_name}
   let(:server_bundle_path) {:path_to_file}
   let(:source_path) {:source_path}
 
   it 'should configure the library' do
-    expect(SeaOtter.configuration.content_for_name).to be_nil
+    expect(SeaOtter.configuration.content_for_name).to be(:sea_otter)
     expect(SeaOtter.configuration.server_bundle_path).to be_nil
     expect(SeaOtter.configuration.source_path).to be_nil
 

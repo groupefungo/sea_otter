@@ -1,8 +1,8 @@
 include ActionView::Helpers::CaptureHelper
 include ActionView::Context
-include SeaOtter::ApplicationHelper
+include SeaOtter::RenderingHelper
 
-RSpec.describe SeaOtter::ApplicationHelper do
+RSpec.describe SeaOtter::RenderingHelper do
   let(:content_for_name) {:sea_otter}
   let(:server_bundle_path) {:path_to_file}
 

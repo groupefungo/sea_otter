@@ -25,7 +25,7 @@ RSpec.describe SeaOtter::Renderer::SourceMap do
         subject {SeaOtter::Renderer::SourceMap.new(File.read(server_bundle_with_source_map))}
 
         it('returns the source map infos for a bundle line and column') do
-          expect {subject.original_position_for(bundle_line, bundle_column)}.to raise_error(SeaOtter::Errors::SourceMap::ParsingError, 'An error occured while parsing the source map. Please make sure the source map is valid.')
+          expect {subject.original_position_for(bundle_line, bundle_column)}.to raise_error(SeaOtter::SourceMap::ParsingError, 'An error occured while parsing the source map. Please make sure the source map is valid.')
         end
       end
 
@@ -33,7 +33,7 @@ RSpec.describe SeaOtter::Renderer::SourceMap do
         subject {SeaOtter::Renderer::SourceMap.new(nil)}
 
         it('returns the source map infos for a bundle line and column') do
-          expect {subject.original_position_for(bundle_line, bundle_column)}.to raise_error(SeaOtter::Errors::SourceMap::MissingError, 'No source map provided.')
+          expect {subject.original_position_for(bundle_line, bundle_column)}.to raise_error(SeaOtter::SourceMap::MissingError, 'No source map provided.')
         end
       end
     end

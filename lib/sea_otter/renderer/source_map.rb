@@ -1,5 +1,5 @@
-require 'sea_otter/errors/source_map/missing_error'
-require 'sea_otter/errors/source_map/parsing_error'
+require 'mini_racer'
+require 'sea_otter/errors'
 
 module SeaOtter
   module Renderer
@@ -10,7 +10,7 @@ module SeaOtter
       end
 
       def original_position_for(line, column)
-        raise SeaOtter::Errors::SourceMap::MissingError if @source_map.blank?
+        raise SeaOtter::SourceMap::MissingError if @source_map.blank?
         
         js = <<-JS
           new sourceMap.SourceMapConsumer(#{@source_map}).originalPositionFor({line: #{line}, column: #{column}});
@@ -20,7 +20,7 @@ module SeaOtter
 
         {file_path: result['source'].gsub(/webpack:\/\/\//, ''), line: result['line'], column: result['column']}
       rescue MiniRacer::ParseError => error
-          raise SeaOtter::Errors::SourceMap::ParsingError
+          raise SeaOtter::SourceMap::ParsingError
       end
 
       class << self

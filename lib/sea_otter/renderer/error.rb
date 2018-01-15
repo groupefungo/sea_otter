@@ -40,8 +40,10 @@ module SeaOtter
 
         def infos
           @infos ||= begin
-            backtrace = [@error.backtrace].flatten.select {|line| line.include?('JavaScript')}
-            match = backtrace.first.match(/\(.*:(\d*):(\d*)\)/)
+            regex = '.*:(\d*):(\d*)'
+
+            backtrace = [@error.backtrace].flatten.select {|line| line.match?(/JavaScript#{regex}/)}
+            match = backtrace.first.match(/#{regex}/)
 
             {line: match[1].to_i - SERVER_BUNDLE_OFFSET, column: match[2].to_i}
           end

@@ -1,0 +1,46 @@
+<style>
+  #sea-otter-error-page {
+    font-family: 'Montserrat', sans-serif;
+  }
+
+  #sea-otter-header {
+    padding: 32px 16px;
+    background: #e24967;
+    color: rgba(0, 0, 0, 0.88);
+  }
+
+  #sea-otter-table {
+    width: 100%;
+    border: 4px solid rgba(0, 0, 0, 0.88);
+    border-collapse: collapse;
+    font-size: 12px;
+    font-family: Consolas, monaco, monospace;
+    white-space: pre;
+  }
+
+  .sea-otter-error-line {
+    background: #e2f2ed;
+  }
+
+  .sea-otter-td-number {
+    border: 2px solid rgba(0, 0, 0, 0.88);
+    text-align: right;
+    user-select: none;
+  }
+</style>
+
+<section id="sea-otter-error-page">
+  <div id="sea-otter-header">
+    <h1><%= error.text %></h1>
+    <h2><%= File.basename(error.file_name) %></h2>
+  </div>
+
+  <table id="sea-otter-table">
+    <% error.code.each.with_index(error.code_first_line + 1) do |line, index| %>
+      <tr class="<%= index == error.line ? 'sea-otter-error-line' : '' %>">
+        <td class="sea-otter-td sea-otter-td-number"><%= index %></td>
+        <td class="sea-otter-td"><%= line %></td>
+      </tr>
+    <% end %>
+  </table>
+</section>

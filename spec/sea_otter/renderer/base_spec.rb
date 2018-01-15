@@ -41,7 +41,7 @@ RSpec.describe SeaOtter::Renderer::Base do
 
             expect(rendered_bundle['html']).to eq(server_html_with_logs)
             expect(rendered_bundle['props']).to eq(props.stringify_keys)
-            expect(rendered_bundle['logs']).to eq(['[SERVER] log A'])
+            expect(rendered_bundle['logs']).to eq(['<SERVER> : log A'])
           end
         end
 
@@ -51,7 +51,7 @@ RSpec.describe SeaOtter::Renderer::Base do
 
             expect(rendered_bundle['html']).to eq(server_html_with_logs)
             expect(rendered_bundle['props']).to eq({})
-            expect(rendered_bundle['logs']).to eq(['[SERVER] log A'])
+            expect(rendered_bundle['logs']).to eq(['<SERVER> : log A'])
           end
         end
       end
@@ -92,7 +92,7 @@ RSpec.describe SeaOtter::Renderer::Base do
             config.server_bundle_path = bad_server_bundle
           end
 
-          expect {subject.render(props: props)}.to raise_error(SeaOtter::Errors::ServerBundle::NotFoundError, server_bundle_not_found_message)
+          expect {subject.render(props: props)}.to raise_error(SeaOtter::ServerBundle::NotFoundError, server_bundle_not_found_message)
         end
       end
     end
@@ -108,7 +108,7 @@ RSpec.describe SeaOtter::Renderer::Base do
 
             expect(rendered_bundle['html']).to eq(params_html_with_logs)
             expect(rendered_bundle['props']).to eq(props.stringify_keys)
-            expect(rendered_bundle['logs']).to eq(['[SERVER] log A'])
+            expect(rendered_bundle['logs']).to eq(['<SERVER> : log A'])
           end
         end
 
@@ -118,7 +118,7 @@ RSpec.describe SeaOtter::Renderer::Base do
 
             expect(rendered_bundle['html']).to eq(params_html_with_logs)
             expect(rendered_bundle['props']).to eq({})
-            expect(rendered_bundle['logs']).to eq(['[SERVER] log A'])
+            expect(rendered_bundle['logs']).to eq(['<SERVER> : log A'])
           end
         end
       end
@@ -149,7 +149,7 @@ RSpec.describe SeaOtter::Renderer::Base do
 
         context 'non existing server bundle' do
           it 'raises an error' do
-            expect {subject.render(server_bundle: bad_server_bundle)}.to raise_error(SeaOtter::Errors::ServerBundle::NotFoundError, server_bundle_not_found_message)
+            expect {subject.render(server_bundle: bad_server_bundle)}.to raise_error(SeaOtter::ServerBundle::NotFoundError, server_bundle_not_found_message)
           end
         end
       end
@@ -161,7 +161,7 @@ RSpec.describe SeaOtter::Renderer::Base do
           config.server_bundle_path = ''
         end
 
-        expect {subject.render(props: props)}.to raise_error(SeaOtter::Errors::ServerBundle::NotConfiguredError, 'Server bundle not configured. Please make sure to add the server bundle path in the sea_otter initializer.')
+        expect {subject.render(props: props)}.to raise_error(SeaOtter::ServerBundle::NotConfiguredError, 'Server bundle not configured. Please make sure to add the server bundle path in the sea_otter initializer.')
       end
     end
   end
@@ -219,7 +219,7 @@ RSpec.describe SeaOtter::Renderer::Base do
   end
 
   context '.print_preloaded_state' do
-    let(:preloaded_state_script) {"<script>console.log('[PRELOADED_STATE] : ', #{props.to_json})</script>"}
+    let(:preloaded_state_script) {"<script>console.log('<PRELOADED STATE> : ', #{props.to_json})</script>"}
 
     context 'in development', :development do
       it 'should return a script tag to print the preloaded state' do

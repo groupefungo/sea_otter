@@ -1,5 +1,5 @@
-require 'sea_otter/errors/server_bundle/not_configured_error'
-require 'sea_otter/errors/server_bundle/not_found_error'
+require 'mini_racer'
+require 'sea_otter/errors'
 
 module SeaOtter
   module Renderer
@@ -7,7 +7,7 @@ module SeaOtter
       class << self
 
         def render(props: {}, server_bundle: SeaOtter.configuration.server_bundle_path)
-          raise SeaOtter::Errors::ServerBundle::NotConfiguredError if server_bundle.blank?
+          raise SeaOtter::ServerBundle::NotConfiguredError if server_bundle.blank?
 
           server_js = File.read(server_bundle)
 
@@ -24,9 +24,9 @@ module SeaOtter
             exports;
           JS
 
-          js_context.eval(js, filename: File.basename(server_bundle))
+          MiniRacer::Context.new(snapshot: snapshot).eval(js, filename: File.basename(server_bundle))
         rescue Errno::ENOENT => error
-          raise SeaOtter::Errors::ServerBundle::NotFoundError
+          raise SeaOtter::ServerBundle::NotFoundError
         end
 
         def print_console_logs(logs = nil)
@@ -38,7 +38,7 @@ module SeaOtter
         def print_preloaded_state(props = {})
           return unless development_env?
 
-          "<script>console.log('[PRELOADED_STATE] : ', #{props.to_json})</script>".html_safe
+          "<script>console.log('<PRELOADED STATE> : ', #{props.to_json})</script>".html_safe
         end
 
         def set_preloaded_state(props = {})
@@ -54,7 +54,7 @@ module SeaOtter
           ['error', 'log', 'info', 'warn'].forEach((level) => {
             console[level] = function() {
               for(let arg of arguments) {
-                console.history.push(`[SERVER] ${arg}`)
+                console.history.push(`<SERVER> : ${arg}`)
               }
             };
           });
@@ -65,11 +65,8 @@ module SeaOtter
           Rails.env.development? || Rails.env.test?
         end
 
-        def js_context
-          context = MiniRacer::Context.new
-          context.eval(console_polyfill)
-
-          context
+        def snapshot
+          @snapshot ||= MiniRacer::Snapshot.new(console_polyfill)
         end
       end
     end
