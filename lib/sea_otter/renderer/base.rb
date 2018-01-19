@@ -32,7 +32,13 @@ module SeaOtter
         def print_console_logs(logs = nil)
           return if logs.blank? || !development_env?
 
-          "<script>#{logs.map {|log| "console.log('#{log.gsub(/'/, '\'')}')"}.join(';')}</script>".html_safe
+          formatted_logs = logs.map do |log|
+            formatted_log = log.gsub(/'/, "\\\\'").gsub(/\n/, "\\\\n")
+
+            "console.log('#{formatted_log}')"
+          end
+
+          "<script>#{formatted_logs.join(';')}</script>".html_safe
         end
 
         def print_preloaded_state(props = {})
