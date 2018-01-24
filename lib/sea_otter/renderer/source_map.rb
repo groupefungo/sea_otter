@@ -12,7 +12,7 @@ module SeaOtter
       def original_position_for(line, column)
         raise SeaOtter::SourceMap::MissingError if @source_map.blank?
         
-        js = <<-JS
+        js = <<-JS.strip_heredoc
           new sourceMap.SourceMapConsumer(#{@source_map}).originalPositionFor({line: #{line}, column: #{column}});
         JS
 

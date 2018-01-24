@@ -6,8 +6,9 @@ module SeaOtter
 
       attr_accessor :error, :text
 
-      SERVER_BUNDLE_OFFSET = 2
-      ERROR_LINES_RANGE = 15
+      SERVER_BUNDLE_OFFSET = 2 # The line offset for the server bundle
+      ERROR_LINES_RANGE = 15 # The line range to show around the error line
+      ERROR_LINES_REGEX = '.*:(\d*):(\d*)' # The regex to match error lines and columns
 
       def initialize(error, json_props, server_bundle)
         @error = error
@@ -36,32 +37,30 @@ module SeaOtter
         @file_name ||= (source_map[:file_path].blank? ? @server_bundle : "#{SeaOtter.configuration.source_path}/#{source_map[:file_path]}")
       end
 
-        private
+      private
 
-        def infos
-          @infos ||= begin
-            regex = '.*:(\d*):(\d*)'
+      def infos
+        @infos ||= begin
+          backtrace = [@error.backtrace].flatten.select {|line| line.match?(/JavaScript#{ERROR_LINES_REGEX}/)}
+          match = backtrace.first.match(/#{ERROR_LINES_REGEX}/)
 
-            backtrace = [@error.backtrace].flatten.select {|line| line.match?(/JavaScript#{regex}/)}
-            match = backtrace.first.match(/#{regex}/)
-
-            {line: match[1].to_i - SERVER_BUNDLE_OFFSET, column: match[2].to_i}
-          end
+          {line: match[1].to_i - SERVER_BUNDLE_OFFSET, column: match[2].to_i}
         end
+      end
 
-        def source_map
-          @source_map ||= begin
-            mapping = {}
-            source_map_url = SeaOtter::Renderer::SourceMap.source_map_url(@server_bundle)
+      def source_map
+        @source_map ||= begin
+          mapping = {}
+          source_map_url = SeaOtter::Renderer::SourceMap.source_map_url(@server_bundle)
 
-            unless source_map_url.blank?
-              source_map = SeaOtter::Renderer::SourceMap.new(File.read("#{File.dirname(@server_bundle)}/#{source_map_url}"))
-              mapping = source_map.original_position_for(infos[:line], infos[:column])
-            end
-
-            mapping
+          unless source_map_url.blank?
+            source_map = SeaOtter::Renderer::SourceMap.new(File.read("#{File.dirname(@server_bundle)}/#{source_map_url}"))
+            mapping = source_map.original_position_for(infos[:line], infos[:column])
           end
+
+          mapping
         end
       end
     end
+  end
 end

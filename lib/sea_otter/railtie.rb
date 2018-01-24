@@ -1,16 +1,19 @@
 require 'sea_otter/renderer/base'
-require 'sea_otter/configuration'
 require 'sea_otter/renderer/error'
 
 module SeaOtter
   class Railtie < Rails::Railtie
 
     initializer('Add sea_otter renderer') do
-      ActionController::Renderers.add(:sea_otter) do |props, options|
+      ActionController::Renderers.add(:sea_otter) do |props, options = {}|
         begin
           @sea_otter_exports = {}
 
-          @sea_otter_exports = SeaOtter::Renderer::Base.render(props: props)
+          alex = {props: props}
+          server_bundle = options.delete(:server_bundle)
+          alex.merge!(server_bundle: server_bundle) unless server_bundle.blank?
+
+          @sea_otter_exports = SeaOtter::Renderer::Base.render(alex)
 
           render('/sea_otter/index', locals: {
               console_logs: SeaOtter::Renderer::Base.print_console_logs(@sea_otter_exports['logs'])&.html_safe,

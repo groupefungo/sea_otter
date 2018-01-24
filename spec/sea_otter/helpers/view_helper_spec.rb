@@ -19,7 +19,7 @@ RSpec.describe SeaOtter::RenderingHelper do
     let(:props) {{key: 'value'}}
 
     let(:bundle) {
-      <<-JS
+      <<-JS.strip_heredoc
         (function(){      
           console.log('alex');
 
