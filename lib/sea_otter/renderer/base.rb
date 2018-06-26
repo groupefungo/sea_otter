@@ -82,10 +82,10 @@ module SeaOtter
 
         private
 
-        # Returns the JavaScript console polyfill.
+        # Returns the JavaScript polyfills.
         #
         # @return [string] the JavaScript heredoc.
-        def console_polyfill
+        def polyfills
           <<-JS.strip_heredoc
             const console = {history: []};
     
@@ -95,7 +95,9 @@ module SeaOtter
                   console.history.push(`<SERVER> : ${arg}`)
                 }
               };
-            });
+            });                  
+
+            const clearTimeout = setTimeout = () => {};
           JS
         end
 
@@ -110,7 +112,7 @@ module SeaOtter
         #
         # @return [MiniRacer::Snapshot] the JavaScript snapshot.
         def snapshot
-          @snapshot ||= MiniRacer::Snapshot.new(console_polyfill)
+          @snapshot ||= MiniRacer::Snapshot.new(polyfills)
         end
       end
     end
