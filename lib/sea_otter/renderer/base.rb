@@ -98,6 +98,8 @@ module SeaOtter
             });                  
 
             const clearTimeout = setTimeout = () => {};
+
+            const self = global;
           JS
         end
 
