@@ -99,7 +99,7 @@ module SeaOtter
 
             const clearTimeout = setTimeout = () => {};
 
-            const self = function() {};
+            const self = {fetch: function() {}};
           JS
         end
 
