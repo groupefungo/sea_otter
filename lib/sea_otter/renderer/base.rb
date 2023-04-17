@@ -19,6 +19,7 @@ module SeaOtter
         # @raise [SeaOtter::ServerBundle::NotFoundError] if the server bundle file is not found.
         def test(props: {}, server_bundle: SeaOtter.configuration.server_bundle_path)
           
+          pp "I am being called"
           raise SeaOtter::ServerBundle::NotConfiguredError if server_bundle.blank?
 
           server_js = File.read(server_bundle)
