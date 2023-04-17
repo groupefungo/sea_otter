@@ -37,7 +37,7 @@ RSpec.describe SeaOtter::Renderer::Base do
 
         context 'with props' do
           it 'should return the rendered bundle' do
-            rendered_bundle = subject.render(props: props)
+            rendered_bundle = subject.renderSeaotter(props: props)
 
             expect(rendered_bundle['html']).to eq(server_html_with_logs)
             expect(rendered_bundle['props']).to eq(props.stringify_keys)
@@ -67,7 +67,7 @@ RSpec.describe SeaOtter::Renderer::Base do
 
         context 'with props', :existing_bundle do
           it 'should return the rendered bundle' do
-            rendered_bundle = subject.render(props: props)
+            rendered_bundle = subject.renderSeaotter(props: props)
 
             expect(rendered_bundle['html']).to eq(server_html_no_logs)
             expect(rendered_bundle['props']).to eq(props.stringify_keys)
@@ -92,7 +92,7 @@ RSpec.describe SeaOtter::Renderer::Base do
             config.server_bundle_path = bad_server_bundle
           end
 
-          expect {subject.render(props: props)}.to raise_error(SeaOtter::ServerBundle::NotFoundError, server_bundle_not_found_message)
+          expect {subject.renderSeaotter(props: props)}.to raise_error(SeaOtter::ServerBundle::NotFoundError, server_bundle_not_found_message)
         end
       end
     end
@@ -104,7 +104,7 @@ RSpec.describe SeaOtter::Renderer::Base do
 
         context 'with props' do
           it 'should return the rendered bundle' do
-            rendered_bundle = subject.render(props: props, server_bundle: params_server_bundle)
+            rendered_bundle = subject.renderSeaotter(props: props, server_bundle: params_server_bundle)
 
             expect(rendered_bundle['html']).to eq(params_html_with_logs)
             expect(rendered_bundle['props']).to eq(props.stringify_keys)
@@ -114,7 +114,7 @@ RSpec.describe SeaOtter::Renderer::Base do
 
         context 'without props' do
           it 'should return the rendered bundle' do
-            rendered_bundle = subject.render(server_bundle: params_server_bundle)
+            rendered_bundle = subject.renderSeaotter(server_bundle: params_server_bundle)
 
             expect(rendered_bundle['html']).to eq(params_html_with_logs)
             expect(rendered_bundle['props']).to eq({})
@@ -129,7 +129,7 @@ RSpec.describe SeaOtter::Renderer::Base do
 
         context 'with props' do
           it 'should return the rendered bundle' do
-            rendered_bundle = subject.render(props: props, server_bundle: params_server_bundle)
+            rendered_bundle = subject.renderSeaotter(props: props, server_bundle: params_server_bundle)
 
             expect(rendered_bundle['html']).to eq(params_html_no_logs)
             expect(rendered_bundle['props']).to eq(props.stringify_keys)
@@ -139,7 +139,7 @@ RSpec.describe SeaOtter::Renderer::Base do
 
         context 'without props' do
           it 'should return the rendered bundle' do
-            rendered_bundle = subject.render(server_bundle: params_server_bundle)
+            rendered_bundle = subject.renderSeaotter(server_bundle: params_server_bundle)
 
             expect(rendered_bundle['html']).to eq(params_html_no_logs)
             expect(rendered_bundle['props']).to eq({})
@@ -149,7 +149,7 @@ RSpec.describe SeaOtter::Renderer::Base do
 
         context 'non existing server bundle' do
           it 'raises an error' do
-            expect {subject.render(server_bundle: bad_server_bundle)}.to raise_error(SeaOtter::ServerBundle::NotFoundError, server_bundle_not_found_message)
+            expect {subject.renderSeaotter(server_bundle: bad_server_bundle)}.to raise_error(SeaOtter::ServerBundle::NotFoundError, server_bundle_not_found_message)
           end
         end
       end
@@ -161,7 +161,7 @@ RSpec.describe SeaOtter::Renderer::Base do
           config.server_bundle_path = ''
         end
 
-        expect {subject.render(props: props)}.to raise_error(SeaOtter::ServerBundle::NotConfiguredError, 'Server bundle not configured. Please make sure to add the server bundle path in the sea_otter initializer.')
+        expect {subject.renderSeaotter(props: props)}.to raise_error(SeaOtter::ServerBundle::NotConfiguredError, 'Server bundle not configured. Please make sure to add the server bundle path in the sea_otter initializer.')
       end
     end
   end
