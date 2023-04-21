@@ -17,7 +17,7 @@ module SeaOtter
         #
         # @raise [SeaOtter::ServerBundle::NotConfiguredError] if the server bundle path is not present.
         # @raise [SeaOtter::ServerBundle::NotFoundError] if the server bundle file is not found.
-        def renderSeaotter(props: {}, server_bundle: SeaOtter.configuration.server_bundle_path)
+        def render(props: {}, server_bundle: SeaOtter.configuration.server_bundle_path)
           
           raise SeaOtter::ServerBundle::NotConfiguredError if server_bundle.blank?
 

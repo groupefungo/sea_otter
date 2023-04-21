@@ -4,7 +4,7 @@ module SeaOtter
     def render_react_app(props = {})
       @sea_otter_exports = {}
 
-      @sea_otter_exports = SeaOtter::Renderer::Base.renderSeaotter(props: props)
+      @sea_otter_exports = SeaOtter::Renderer::Base.render(props: props)
 
       content_for(SeaOtter.configuration.content_for_name) do
         [
@@ -18,7 +18,7 @@ module SeaOtter
     rescue MiniRacer::RuntimeError => error
       renderer_error = SeaOtter::Renderer::Error.new(error, props.to_json, SeaOtter.configuration.server_bundle_path)
 
-      renderSeaotter(partial: '/sea_otter/partials/errors', locals: {error: renderer_error})
+      render(partial: '/sea_otter/partials/errors', locals: {error: renderer_error})
     end
   end
 end

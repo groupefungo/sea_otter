@@ -13,9 +13,9 @@ module SeaOtter
           server_bundle = options.delete(:server_bundle)
           alex.merge!(server_bundle: server_bundle) unless server_bundle.blank?
 
-          @sea_otter_exports = SeaOtter::Renderer::Base.renderSeaotter(alex)
+          @sea_otter_exports = SeaOtter::Renderer::Base.render(alex)
 
-          renderSeaotter('/sea_otter/index', locals: {
+          render('/sea_otter/index', locals: {
               console_logs: SeaOtter::Renderer::Base.print_console_logs(@sea_otter_exports['logs'])&.html_safe,
               html: @sea_otter_exports['html']&.html_safe,
               preloaded_state: SeaOtter::Renderer::Base.set_preloaded_state(props)&.html_safe,
@@ -24,7 +24,7 @@ module SeaOtter
         rescue MiniRacer::RuntimeError => error
           renderer_error = SeaOtter::Renderer::Error.new(error, props.to_json, SeaOtter.configuration.server_bundle_path)
 
-          renderSeaotter('/sea_otter/errors', status: :error, layout: 'sea_otter', locals: {error: renderer_error})
+          render('/sea_otter/errors', status: :error, layout: 'sea_otter', locals: {error: renderer_error})
         end
       end
     end
