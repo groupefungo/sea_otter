@@ -17,7 +17,7 @@ Gem::Specification.new do |spec|
   spec.files = Dir['{app,lib}/**/*', 'MIT-LICENSE', 'Rakefile', 'README.md']
 
   spec.add_dependency 'mini_racer'
-  spec.add_dependency 'rails', '>= 3'
+  spec.add_dependency 'rails', '>= 7'
 
   spec.add_development_dependency 'bundler', '~> 1.16'
   spec.add_development_dependency 'rake', '~> 10.0'
